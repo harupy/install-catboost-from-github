@@ -6,6 +6,7 @@ jobs:
   install:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         branch-or-commit: [
             "master", # fail
