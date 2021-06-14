@@ -24,3 +24,17 @@ jobs:
           cd catboost/catboost/python-package
           git checkout ${{ matrix.branch-or-commit }}
           python setup.py bdist_wheel
+
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.6"
+      - run: |
+          pip install wheel
+          git clone -b fix-condition https://github.com/harupy/catboost.git
+          cd catboost/catboost/python-package
+          git checkout ${{ matrix.branch-or-commit }}
+          python setup.py bdist_wheel
