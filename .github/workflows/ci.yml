@@ -22,3 +22,13 @@ jobs:
           python-version: "3.6"
       - run: |
           pip install git+https://github.com/catboost/catboost.git@9b0375cce7f142ef21c586d29721e920d4b3ebb6#subdirectory=catboost/python-package
+
+  master:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.6"
+      - run: |
+          pip install git+https://github.com/catboost/catboost.git#subdirectory=catboost/python-package
