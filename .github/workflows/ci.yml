@@ -3,8 +3,14 @@ name: Install catboost
 on: pull_request
 
 jobs:
-  fail:
+  install:
     runs-on: ubuntu-latest
+    matrix:
+      branch-or-commit: [
+          "master", # fail
+          "4059dfa5294c7b7d0220d5312c53e75bba9dd18e", # fail
+          "9b0375cce7f142ef21c586d29721e920d4b3ebb6", # succeed
+        ]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v2
@@ -12,26 +18,7 @@ jobs:
           python-version: "3.6"
       - run: |
           pip install wheel
-          pip install git+https://github.com/catboost/catboost.git@4059dfa5294c7b7d0220d5312c53e75bba9dd18e#subdirectory=catboost/python-package
-
-  succeed:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: "3.6"
-      - run: |
-          pip install wheel
-          pip install git+https://github.com/catboost/catboost.git@9b0375cce7f142ef21c586d29721e920d4b3ebb6#subdirectory=catboost/python-package
-
-  master:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-        with:
-          python-version: "3.6"
-      - run: |
-          pip install wheel
-          pip install git+https://github.com/catboost/catboost.git#subdirectory=catboost/python-package
+          git clone https://github.com/catboost/catboost.git
+          cd catboost/python-package
+          git checkout ${{ matrix.branch-or-commit }}
+          python setup.py bdist_wheel
