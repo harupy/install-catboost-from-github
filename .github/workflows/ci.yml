@@ -1,7 +1,6 @@
-name: MLflow tests
+name: Install catboost
 
-on: pull_request:
-
+on: pull_request
 
 jobs:
   fail:
